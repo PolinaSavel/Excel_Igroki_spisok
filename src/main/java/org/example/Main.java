@@ -36,18 +36,16 @@ public class Main {
             Row row = sheet.createRow(i); // sozdayem pervuyu stroku
             row.createCell(0).setCellValue(RandomNameGenerator.getRandomName());
 
-            for (int j = 0; j < numberOfLines; j++) {
-                int randomNumber = random.nextInt(150000); // Generiruem sluchaynie chisla do 150 000
-                row.createCell(1).setCellValue(randomNumber); // Zapolnyaem 2oy stolec sluchaynimi chislami
-            }
+            int randomNumber = random.nextInt(numberOfLines); // Generiruem sluchaynie chisla do 150 000
+            row.createCell(1).setCellValue(randomNumber); // Zapolnyaem 2oy stolbec sluchaynimi chislami
         }
 
         List<Row> rows = new ArrayList<>();
 
-        for (int i = 0; i <= sheet.getLastRowNum(); i++) {  // sohranit vse stroki
+        for (int i = 0; i <= sheet.getLastRowNum(); i++) {  // sohranit vse stroki, poka i menshe indexa posledney stroki
             Row row = sheet.getRow(i);
             if (row != null) {
-                rows.add(row);
+                rows.add(row);     //dobavlyaem stroke v spisok rows
             }
         }
 
@@ -70,7 +68,6 @@ public class Main {
         sortedSheet.setColumnWidth(0, 256 * 30);       // shirina pervogo stolbca
         sortedSheet.setColumnWidth(1, 256 * 10);
 
-
         for (int i = 0; i < rows.size(); i++) {                    // Zapisivaem otsortirovanniy spisok v noviy list
             Row newRow = sortedSheet.createRow(i);
             Row oldRow = rows.get(i);
@@ -85,14 +82,12 @@ public class Main {
                         case STRING:
                             newCell.setCellValue(oldCell.getStringCellValue());
                             break;
-
                         default:
                             newCell.setCellValue(oldCell.toString());
                     }
                 }
             }
         }
-
 
         wb.write(fos);   //zapisali
         wb.close();
